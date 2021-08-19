@@ -7,7 +7,7 @@
 		<link rel="icon" href="#" />
 		<title>Contact Us Form</title>
 		<style>
-			fieldset {
+			.contact-us-form {
 				width: clamp(359px, 60%, 1400px);
 				margin: 32px auto;
 				border: 1px dotted black;
@@ -15,9 +15,9 @@
 				position: relative;
 			}
 
-			legend,
-			.generic-label,
-			button {
+			.contact-us-form legend,
+			.contact-us-form .generic-label,
+			.contact-us-form .submit-contact-us-button {
 				position: relative;
 				display: block;
 				background-color: black;
@@ -29,12 +29,12 @@
 				padding: 8px;
 				margin: 16px 0;
 			}
-			.generic-label {
+			.contact-us-form .generic-label {
 				display: flex;
 				justify-content: space-around;
 				align-items: center;
 			}
-			legend::after {
+			.contact-us-form legend::after {
 				content: "";
 				position: absolute;
 				bottom: -5px;
@@ -43,48 +43,48 @@
 				width: 220px;
 				height: 2px;
 			}
-			input,
-			textarea {
+			.contact-us-form input,
+			.contact-us-form textarea {
 				width: clamp(200px, 60%, 80%);
 				border-radius: 16px;
 				padding: 8px;
 				margin: 5px 0;
 			}
-			textarea {
+			.contact-us-form textarea {
 				resize: none;
 			}
-			input {
+			.contact-us-form input {
 				appearance: none;
 				-webkit-appearance: none;
 			}
-			input:focus,
-			input:active,
-			textarea:focus,
-			textarea:active {
+			.contact-us-form input:focus,
+			.contact-us-form input:active,
+			.contact-us-form textarea:focus,
+			.contact-us-form textarea:active {
 				outline: 1px solid royalblue;
 				border: 2px solid transparent;
 				text-indent: 2px;
 			}
-			.generic-container {
+			.contact-us-form .generic-container {
 				display: flex;
 				justify-content: space-between;
 				align-items: flex-start;
 				flex-direction: column;
 				padding: 16px 0;
 			}
-			.form-required-field {
+			.contact-us-form .form-required-field {
 				height: 13px;
 				color: royalblue;
 			}
-			.form-notes {
+			.contact-us-form.form-notes {
 				color: grey;
 				font-size: 15px;
 				margin-bottom: 0;
 			}
-			.warn-user {
+			.contact-us-form.warn-user {
 				outline: 5px solid royalblue;
 			}
-			.visible-popup {
+			.contact-us-form .visible-popup {
 				text-align: center;
 				background: black;
 				animation: 1;
@@ -102,7 +102,7 @@
 		</style>
 	</head>
 	<body>
-		<fieldset>
+		<fieldset class="contact-us-form">
 			<form action="/your_handling_page" method="GET" id="contact-us-form">
 				<legend>Contact Us</legend>
 				<div class="generic-container">
@@ -130,7 +130,7 @@
 					></textarea>
 				</div>
 				<div>
-					<button type="submit">Submit Your Message</button>
+					<button class="submit-contact-us-button" type="submit">Submit Your Message</button>
 				</div>
 			</form>
 			<p class="form-notes"><span class="form-required-field">*</span> marked fields are required.</p>
