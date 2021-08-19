@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" href="#" />
+		<title>Contact Us Form</title>
+		<style>
+			fieldset {
+				width: clamp(359px, 60%, 1400px);
+				margin: 32px auto;
+				border: 1px dotted black;
+				background-color: lightblue;
+				position: relative;
+			}
+
+			legend,
+			.generic-label,
+			button {
+				position: relative;
+				display: block;
+				background-color: black;
+				border-radius: 22px;
+				min-width: 128px;
+				max-width: max-content;
+				color: white;
+				text-align: left;
+				padding: 8px;
+				margin: 16px 0;
+			}
+			.generic-label {
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+			}
+			legend::after {
+				content: "";
+				position: absolute;
+				bottom: -5px;
+				left: 0;
+				background-color: black;
+				width: 220px;
+				height: 2px;
+			}
+			input,
+			textarea {
+				width: clamp(200px, 60%, 80%);
+				border-radius: 16px;
+				padding: 8px;
+				margin: 5px 0;
+			}
+			textarea {
+				resize: none;
+			}
+			input {
+				appearance: none;
+				-webkit-appearance: none;
+			}
+			input:focus,
+			input:active,
+			textarea:focus,
+			textarea:active {
+				outline: 1px solid royalblue;
+				border: 2px solid transparent;
+				text-indent: 2px;
+			}
+			.generic-container {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				flex-direction: column;
+				padding: 16px 0;
+			}
+			.form-required-field {
+				height: 13px;
+				color: royalblue;
+			}
+			.form-notes {
+				color: grey;
+				font-size: 15px;
+				margin-bottom: 0;
+			}
+			.warn-user {
+				outline: 5px solid royalblue;
+			}
+			.visible-popup {
+				text-align: center;
+				background: black;
+				animation: 1;
+				box-shadow: 1px 1px black;
+				color: white;
+				width: 228px;
+				margin: 0 auto;
+				position: absolute;
+				bottom: 19px;
+				right: 50%;
+				transform: translateX(50%);
+				padding: 5px;
+				border: 1px solid grey;
+			}
+		</style>
+	</head>
+	<body>
+		<fieldset>
+			<form action="/your_handling_page" method="GET" id="contact-us-form">
+				<legend>Contact Us</legend>
+				<div class="generic-container">
+					<label for="user_name" class="generic-label">Your Name: <span class="form-required-field">*</span></label>
+					<input type="text" name="user_name" id="user_name" placeholder="My Name is..." />
+				</div>
+				<div class="generic-container">
+					<label for="user_name" class="generic-label">Your E-Mail: <span class="form-required-field">*</span></label>
+					<input type="text" name="user_email" id="user_email" placeholder="My Email is..." />
+				</div>
+				<div class="generic-container">
+					<label for="user_name" class="generic-label">Your Phone Number (Optional):</label>
+					<input type="text" name="user_phone_number" id="user_phone_number" placeholder="My Phone Number is..." />
+				</div>
+				<div class="generic-container">
+					<label for="user_message" class="generic-label">Your Message: <span class="form-required-field">*</span></label>
+					<textarea
+						name="user_message"
+						id="user_message"
+						cols="30"
+						rows="10"
+						placeholder="My message is..."
+						spellcheck="true"
+						wrap="hard"
+					></textarea>
+				</div>
+				<div>
+					<button type="submit">Submit Your Message</button>
+				</div>
+			</form>
+			<p class="form-notes"><span class="form-required-field">*</span> marked fields are required.</p>
+		</fieldset>
+		<script defer>
+			const contactUsForm = document.querySelector("#contact-us-form");
+			contactUsForm.addEventListener("submit", validateFormContent);
+			function validateFormContent(e) {
+				e.preventDefault();
+				const userNameInput = document.querySelector("#user_name");
+				const userEmailInput = document.querySelector("#user_email");
+				const userNumberInput = document.querySelector("#user_phone_number");
+				const userMessageInput = document.querySelector("#user_message");
+
+				// this function tests each input (as its passed below with each input's value, and returns a boolean whether the input has any text or not, (it returns false if its empty spaces only too));
+				function isInputEmpty(value) {
+					if (!value || value === "" || value.trim() === "") {
+						return true;
+					} else {
+						return false;
+					}
+				}
+				// no validation for the user name since this is a contact us form and not a sign up, normally, there will be no requirments on what kind of user name can contact us;
+				function validateEmail(email, regex) {
+					return regex.test(email);
+				}
+				let userNameIsEmpty = isInputEmpty(userNameInput.value);
+				let userEmailIsEmpty = isInputEmpty(userEmailInput.value);
+				let userMessageIsEmpty = isInputEmpty(userMessageInput.value);
+
+				let userEmailIsvalid = validateEmail(
+					userEmailInput.value,
+					/(?!^[.+&'_-]*@.*$)(^[_\w\d+&'-]+(\.[_\w\d+&'-]*)*@[\w\d-]+(\.[\w\d-]+)*\.(([\d]{1,3})|([\w]{2,}))$)/g
+				);
+
+				// check user name
+				if (userNameIsEmpty) {
+					userNameInput.classList.add("warn-user");
+					setTimeout(() => {
+						userNameInput.classLis.remove("warn-user");
+					}, 1500);
+					return;
+				}
+				// check user email
+				if (userEmailIsEmpty || !userEmailIsvalid) {
+					userEmailInput.classList.add("warn-user");
+					setTimeout(() => {
+						userEmailInput.classList.remove("warn-user");
+					}, 1500);
+					return;
+				}
+				// check user message
+				if (userMessageIsEmpty) {
+					userMessageInput.classList.add("warn-user");
+					setTimeout(() => {
+						userMessageInput.classList.remove("warn-user");
+					}, 1500);
+					return;
+				}
+
+				const popup = document.createElement("div");
+				popup.textContent = "Your message has been submitted successfully!";
+				contactUsForm.append(popup);
+				popup.classList.add("visible-popup");
+				setTimeout(() => {
+					popup.classList.remove("visible-popup");
+				}, 2000);
+			}
+		</script>
+	</body>
+</html>
