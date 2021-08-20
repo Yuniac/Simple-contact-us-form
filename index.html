@@ -279,16 +279,17 @@
 				// check the user email for both: not being empty and being an actual email address ('actual' is a little tricky because we are relying on a regular expression to figure out
 				// whether it's a legit email or not, it works... for most email address out there);
 				// || if you don't want to validate the user email comment the condition below
-				// if (userEmailIsEmpty || !userEmailIsvalid) {
-				// 	userEmailInput.classList.add("warn-user");
-				// 	userEmailInput.nextElementSibling.classList.add("visibilie-warning-span");
 
-				// 	setTimeout(() => {
-				// 		userEmailInput.classList.remove("warn-user");
-				// 		userEmailInput.nextElementSibling.classList.remove("visibilie-warning-span");
-				// 	}, 2500);
-				// 	return;
-				// }
+				if (userEmailIsEmpty || !userEmailIsvalid) {
+					userEmailInput.classList.add("warn-user");
+					userEmailInput.nextElementSibling.classList.add("visibilie-warning-span");
+
+					setTimeout(() => {
+						userEmailInput.classList.remove("warn-user");
+						userEmailInput.nextElementSibling.classList.remove("visibilie-warning-span");
+					}, 2500);
+					return;
+				}
 
 				// check user message (currently, we are only testing to see whether the message is empty or not, if you want to preform some further testing on its content like for example testing the message on a regluar expression then you can use the function we used eariler to validate the email "validateEmail". e.g:
 				// validateEmail(userMessageInput.value, aRegularExpressionToTestTheMessageOn), save the return value here in a variable and pass it prefixed with a "!" to the condition below like so:
